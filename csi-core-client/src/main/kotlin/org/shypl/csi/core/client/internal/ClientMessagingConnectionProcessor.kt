@@ -58,7 +58,7 @@ internal class ClientMessagingConnectionProcessor(
 				false
 			}
 			ProtocolMarker.SERVER_CLOSE_CONCURRENT -> {
-				logger.warn("Closing because of the received marker ${ProtocolMarker.toString(marker)}")
+				logger.debug("Closing because of the received marker ${ProtocolMarker.toString(marker)}")
 				channel.close()
 				false
 			}
