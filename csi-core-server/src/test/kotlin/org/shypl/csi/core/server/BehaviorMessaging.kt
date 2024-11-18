@@ -10,7 +10,7 @@ class BehaviorMessaging {
 	fun `Ping stay connection active`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sleep(1000)
 				sendData("20")
@@ -34,7 +34,7 @@ class BehaviorMessaging {
 	fun `Input message on closing connection`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendData {
 					writeByte(0x21)
@@ -58,7 +58,7 @@ class BehaviorMessaging {
 	fun `Input message on outside closing connection`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessageCloseSleep(1, 100)
 				sendMessage(2) {}
@@ -74,7 +74,7 @@ class BehaviorMessaging {
 	fun `Input 2 messages on 1 frame`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendData {
 					writeByte(0x21)
@@ -99,7 +99,7 @@ class BehaviorMessaging {
 	fun `Error on process message`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) { writeByte(TestApiMarker.ERROR) }
 				receiveMessageReceived(1)
@@ -113,7 +113,7 @@ class BehaviorMessaging {
 	fun `Error on process message after close`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) { writeByte(TestApiMarker.CLOSE_ERROR) }
 				receiveMessageReceived(1)
@@ -128,7 +128,7 @@ class BehaviorMessaging {
 	fun `Reuse message from OutgoingMessageBuffer cache`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessageEcho(1, 42)
 				receiveMessageInt(1, 42)
@@ -163,7 +163,7 @@ class BehaviorMessaging {
 	fun `Separated message`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendData("21")
 				sendData("00 00 00 01")
@@ -181,7 +181,7 @@ class BehaviorMessaging {
 	fun `Separated received message`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendData("22")
 				sendData("00 00 00 01")
@@ -195,7 +195,7 @@ class BehaviorMessaging {
 	fun `Error on not all message data read`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendData("21  00 00 00 01  00 00 00 02  FF FF")
 				
@@ -210,7 +210,7 @@ class BehaviorMessaging {
 	fun `Invalid flag`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendData("FF")
 				
@@ -226,7 +226,7 @@ class BehaviorMessaging {
 	fun `Send message byte`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BYTE)
@@ -244,7 +244,7 @@ class BehaviorMessaging {
 	fun `Send message byte parallel`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BYTE)
@@ -262,7 +262,7 @@ class BehaviorMessaging {
 	fun `Send message byte after close`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BYTE)
@@ -280,7 +280,7 @@ class BehaviorMessaging {
 	fun `Send message byte parallel after close`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BYTE)
@@ -301,7 +301,7 @@ class BehaviorMessaging {
 	fun `Send message array`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_ARRAY)
@@ -319,7 +319,7 @@ class BehaviorMessaging {
 	fun `Send message array parallel`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_ARRAY)
@@ -337,7 +337,7 @@ class BehaviorMessaging {
 	fun `Send message array after close`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_ARRAY)
@@ -355,7 +355,7 @@ class BehaviorMessaging {
 	fun `Send message array parallel after close`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_ARRAY)
@@ -376,7 +376,7 @@ class BehaviorMessaging {
 	fun `Send message buffer`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BUFFER)
@@ -394,7 +394,7 @@ class BehaviorMessaging {
 	fun `Send message buffer parallel`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BUFFER)
@@ -412,7 +412,7 @@ class BehaviorMessaging {
 	fun `Send message buffer after close`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BUFFER)
@@ -430,7 +430,7 @@ class BehaviorMessaging {
 	fun `Send message buffer parallel after close`() {
 		server {
 			channel {
-				authorization()
+				authentication()
 				
 				sendMessage(1) {
 					writeByte(TestApiMarker.SEND_BUFFER)

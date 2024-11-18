@@ -2,7 +2,7 @@ package org.shypl.csi.core.client
 
 enum class ConnectFailReason {
 	REFUSED,
-	AUTHORIZATION,
+	AUTHENTICATION,
 	VERSION,
 	ERROR
 }

@@ -14,7 +14,7 @@ import kotlin.random.Random
 class Server<I : Any>(
 	assistant: TemporalAssistant,
 	byteBuffers: ObjectPool<ByteBuffer>,
-	connectionAuthorizer: ConnectionAuthorizer<I>,
+	connectionAuthenticator: ConnectionAuthenticator<I>,
 	connectionAcceptor: ConnectionAcceptor<I>,
 	gate: ChannelGate,
 	shutdownTimeoutSeconds: Int = 0,
@@ -46,7 +46,7 @@ class Server<I : Any>(
 		channelActivityTimeoutSeconds,
 		shutdownTimeoutSeconds,
 		channelStopTimeoutSeconds,
-		connectionAuthorizer,
+		connectionAuthenticator,
 		connectionHolder,
 		connectionHolder
 	)

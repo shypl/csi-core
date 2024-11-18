@@ -24,7 +24,7 @@ internal class Connections<I : Any>(
 	private val stopTimeoutSeconds: Int,
 	private val idGenerator: () -> Long,
 	private val registry: ConnectionRegistry<I>,
-) : ConnectionAuthorizationAcceptor<I>, ConnectionRecoveryAcceptor, ServerConnectionReleaser<I> {
+) : ConnectionAuthenticationAcceptor<I>, ConnectionRecoveryAcceptor, ServerConnectionReleaser<I> {
 	
 	private val logger = ownLogger
 	private val _size = AtomicInteger()
@@ -39,7 +39,7 @@ internal class Connections<I : Any>(
 		require(stopTimeoutSeconds > 0)
 	}
 	
-	override fun acceptAuthorization(channel: InternalChannel, identity: I): InternalChannelProcessor {
+	override fun acceptAuthentication(channel: InternalChannel, identity: I): InternalChannelProcessor {
 		logger.trace { "Accept connection $identity" }
 		
 		var connectionId: Long

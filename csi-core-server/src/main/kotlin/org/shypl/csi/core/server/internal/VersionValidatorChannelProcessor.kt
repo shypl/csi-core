@@ -8,7 +8,7 @@ import org.shypl.tool.io.InputByteBuffer
 
 internal class VersionValidatorChannelProcessor(
 	private val serverVersion: Int,
-	private val authorization: InternalChannelProcessor
+	private val authentication: InternalChannelProcessor
 ) : InternalChannelProcessor {
 	
 	override fun processChannelInput(channel: InternalChannel, buffer: InputByteBuffer): ChannelProcessorInputResult {
@@ -19,7 +19,7 @@ internal class VersionValidatorChannelProcessor(
 				channel.closeWithMarker(ProtocolMarker.SERVER_CLOSE_VERSION)
 				return ChannelProcessorInputResult.BREAK
 			}
-			channel.useProcessor(authorization)
+			channel.useProcessor(authentication)
 			return ChannelProcessorInputResult.CONTINUE
 		}
 		

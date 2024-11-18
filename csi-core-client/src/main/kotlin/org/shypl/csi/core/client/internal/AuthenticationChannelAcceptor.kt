@@ -13,30 +13,30 @@ import org.shypl.tool.io.putInt
 import org.shypl.tool.utils.assistant.TemporalAssistant
 import org.shypl.tool.utils.pool.ObjectPool
 
-internal class AuthorizationChannelAcceptor(
+internal class AuthenticationChannelAcceptor(
 	private val assistant: TemporalAssistant,
 	private val byteBuffers: ObjectPool<ByteBuffer>,
 	private val gate: ChannelGate,
 	private val clientVersion: Int,
-	private val authorizationKey: ByteArray,
+	private val authenticationKey: ByteArray,
 	private val acceptor: ConnectionAcceptor,
-	private val authorizationTimeoutSeconds: Int
+	private val authenticationTimeoutSeconds: Int
 ) : ChannelAcceptor {
 	
 	override fun acceptChannel(channel: Channel): ChannelHandler {
 		val clientChannel = ClientChannelImpl(
 			channel,
-			AuthorizationChannelProcessor(assistant, byteBuffers, gate, acceptor),
+			AuthenticationChannelProcessor(assistant, byteBuffers, gate, acceptor),
 			assistant,
 			byteBuffers,
-			authorizationTimeoutSeconds
+			authenticationTimeoutSeconds
 		)
 		
-		clientChannel.send(ByteArray(1 + 4 + 4 + authorizationKey.size).also {
-			it[0] = ProtocolMarker.AUTHORIZATION
+		clientChannel.send(ByteArray(1 + 4 + 4 + authenticationKey.size).also {
+			it[0] = ProtocolMarker.AUTHENTICATION
 			it.putInt(1, clientVersion)
-			it.putInt(1 + 4, authorizationKey.size)
-			it.putByteArray(1 + 4 + 4, authorizationKey)
+			it.putInt(1 + 4, authenticationKey.size)
+			it.putByteArray(1 + 4 + 4, authenticationKey)
 		})
 		
 		return clientChannel

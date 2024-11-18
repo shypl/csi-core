@@ -21,7 +21,7 @@ internal class AcceptationConnectionProcessor<I : Any>(
 	override fun processConnectionAccept(channel: Channel, connection: InternalConnection): InternalConnectionProcessor {
 		
 		channel.send(ByteArray(1 + 8 + 4).apply {
-			set(0, ProtocolMarker.AUTHORIZATION)
+			set(0, ProtocolMarker.AUTHENTICATION)
 			putLong(1, connection.id)
 			putInt(1 + 8, activityTimeoutSeconds)
 		})

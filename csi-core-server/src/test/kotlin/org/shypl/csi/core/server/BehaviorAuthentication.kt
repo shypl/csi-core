@@ -4,7 +4,7 @@ import org.shypl.csi.core.server._test.server
 import org.shypl.tool.lang.waitWhile
 import kotlin.test.Test
 
-class BehaviorAuthorization {
+class BehaviorAuthentication {
 	@Test
 	fun `Invalid version with split message`() {
 		server(version = 5) {
@@ -26,7 +26,7 @@ class BehaviorAuthorization {
 	}
 	
 	@Test
-	fun `Authorization rejected on bad auth key with split message`() {
+	fun `Authentication rejected on bad auth key with split message`() {
 		server {
 			channel {
 				sendData {
@@ -44,7 +44,7 @@ class BehaviorAuthorization {
 	}
 	
 	@Test
-	fun `Error on authorization`() {
+	fun `Error on authentication`() {
 		server {
 			channel {
 				sendData {
@@ -63,13 +63,13 @@ class BehaviorAuthorization {
 	fun `Concurrent connections`() {
 		server {
 			channel {
-				authorization(1)
+				authentication(1)
 				receiveData("53")
 				receiveClose()
 			}
 			waitWhile(1000) { server.connections == 0 }
 			channel {
-				authorization(1)
+				authentication(1)
 				sendClose()
 				receiveClose()
 			}
@@ -82,7 +82,7 @@ class BehaviorAuthorization {
 		var w = true
 		server {
 			channel {
-				authorization(1)
+				authentication(1)
 				sendMessageSleep(1, 500)
 				w = false
 				receiveMessageReceived(1)
@@ -111,7 +111,7 @@ class BehaviorAuthorization {
 		var w = true
 		server {
 			channel {
-				authorization(1)
+				authentication(1)
 				sendMessageSleep(1, 500)
 				w = false
 				receiveMessageReceived(1)

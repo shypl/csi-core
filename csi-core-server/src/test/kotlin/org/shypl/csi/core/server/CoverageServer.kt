@@ -5,7 +5,7 @@ import org.shypl.csi.core.server._test.Errors
 import org.shypl.csi.core.server._test.GLOBAL_BYTE_BUFFER_POOL
 import org.shypl.csi.core.server._test.TestChannelGate
 import org.shypl.csi.core.server._test.TestConnectionAcceptor
-import org.shypl.csi.core.server._test.TestConnectionAuthorizer
+import org.shypl.csi.core.server._test.TestConnectionAuthenticator
 import org.shypl.csi.core.server._test.assistant
 
 class CoverageServer {
@@ -14,7 +14,7 @@ class CoverageServer {
 		Server(
 			assistant(2, "server"),
 			GLOBAL_BYTE_BUFFER_POOL,
-			TestConnectionAuthorizer(),
+			TestConnectionAuthenticator(),
 			TestConnectionAcceptor(),
 			TestChannelGate(Errors()),
 			1,

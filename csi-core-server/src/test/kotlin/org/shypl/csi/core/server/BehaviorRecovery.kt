@@ -13,7 +13,7 @@ class BehaviorRecovery {
 			var w = true
 			
 			channel {
-				sid = authorization(1)
+				sid = authentication(1)
 				sendMessageEcho(1, 5)
 				sendMessageEcho(2, 6)
 				sendMessageEcho(3, 7)
@@ -48,7 +48,7 @@ class BehaviorRecovery {
 			var cid = 0L
 			
 			channel {
-				cid = authorization()
+				cid = authentication()
 				receiveData("30")
 				receiveClose()
 			}
@@ -87,7 +87,7 @@ class BehaviorRecovery {
 	fun `Recovery timeout`() {
 		server {
 			channel {
-				authorization(1)
+				authentication(1)
 				sendClose()
 				receiveClose()
 			}
@@ -102,7 +102,7 @@ class BehaviorRecovery {
 			var w = true
 			
 			channel {
-				cid = authorization()
+				cid = authentication()
 				sendMessageSleep(1, 1100)
 				w = false
 				receiveMessageReceived(1)
@@ -130,7 +130,7 @@ class BehaviorRecovery {
 			var w = true
 			
 			channel {
-				cid = authorization()
+				cid = authentication()
 				sendMessageSleepClose(1, 500)
 				w = false
 				receiveMessageReceived(1)
@@ -159,7 +159,7 @@ class BehaviorRecovery {
 			var w = true
 			
 			channel {
-				cid = authorization()
+				cid = authentication()
 				sendMessageEcho(1, 5)
 				sendMessageEcho(2, 6)
 				sendMessageEcho(3, 7)

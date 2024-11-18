@@ -8,17 +8,17 @@ import org.shypl.csi.core.internal.ProtocolMarker
 import org.shypl.tool.io.InputByteBuffer
 
 internal class ReceptionChannelProcessor(
-	private val authorization: InternalChannelProcessor,
+	private val authentication: InternalChannelProcessor,
 	private val recovery: InternalChannelProcessor
 ) : InternalChannelProcessor {
 	
 	override fun processChannelInput(channel: InternalChannel, buffer: InputByteBuffer): ChannelProcessorInputResult {
 		return when (val marker = buffer.readByte()) {
-			ProtocolMarker.AUTHORIZATION -> {
-				channel.useProcessor(authorization)
+			ProtocolMarker.AUTHENTICATION -> {
+				channel.useProcessor(authentication)
 				ChannelProcessorInputResult.CONTINUE
 			}
-			ProtocolMarker.RECOVERY      -> {
+			ProtocolMarker.RECOVERY       -> {
 				channel.useProcessor(recovery)
 				ChannelProcessorInputResult.CONTINUE
 			}

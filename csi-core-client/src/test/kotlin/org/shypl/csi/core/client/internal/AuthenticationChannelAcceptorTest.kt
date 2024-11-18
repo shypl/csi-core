@@ -11,7 +11,7 @@ import org.shypl.tool.io.readArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class AuthorizationChannelAcceptorTest {
+class AuthenticationChannelAcceptorTest {
 	@Test
 	fun `When accept fail then connect failed as REFUSED`() {
 		var actualReason: ConnectFailReason? = null
@@ -22,7 +22,7 @@ class AuthorizationChannelAcceptorTest {
 			}
 		}
 		
-		AuthorizationChannelAcceptor(GLOBAL_ASSISTANT, GLOBAL_BYTE_BUFFER_POOL, gate {}, 0, byteArrayOf(), acceptor, 1)
+		AuthenticationChannelAcceptor(GLOBAL_ASSISTANT, GLOBAL_BYTE_BUFFER_POOL, gate {}, 0, byteArrayOf(), acceptor, 1)
 			.acceptFail()
 		
 		assertEquals(ConnectFailReason.REFUSED, actualReason)
@@ -34,7 +34,7 @@ class AuthorizationChannelAcceptorTest {
 		
 		val acceptor = NothingConnectionAcceptor()
 		
-		AuthorizationChannelAcceptor(GLOBAL_ASSISTANT, GLOBAL_BYTE_BUFFER_POOL, gate {}, 7, byteArrayOf(0x42), acceptor, 1)
+		AuthenticationChannelAcceptor(GLOBAL_ASSISTANT, GLOBAL_BYTE_BUFFER_POOL, gate {}, 7, byteArrayOf(0x42), acceptor, 1)
 			.acceptChannel(FnChannel({
 				data = readArray()
 			}))

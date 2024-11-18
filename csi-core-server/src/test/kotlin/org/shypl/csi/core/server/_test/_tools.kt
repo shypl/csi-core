@@ -29,7 +29,7 @@ inline fun server(
 	val server = Server(
 		assistant(2, "server"),
 		GLOBAL_BYTE_BUFFER_POOL,
-		TestConnectionAuthorizer(),
+		TestConnectionAuthenticator(),
 		TestConnectionAcceptor(),
 		gateway,
 		shutdownTimeout,
@@ -121,7 +121,7 @@ class ChannelActions(private val channel: TestChannel) {
 		receiveClose()
 	}
 	
-	fun authorization(clientId: Int = Random.nextInt(0, Int.MAX_VALUE), clientVersion: Int = 1): Long {
+	fun authentication(clientId: Int = Random.nextInt(0, Int.MAX_VALUE), clientVersion: Int = 1): Long {
 		var connectionId = 0L
 		
 		sendData {

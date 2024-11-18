@@ -60,7 +60,7 @@ class BehaviorStops {
 	fun `Stop on busy connection`() {
 		server(channelActivityTimeout = 5, shutdownTimeout = 0) {
 			channel {
-				authorization()
+				authentication()
 				sendMessageSleep(1, 1500)
 				server.stop()
 				receiveMessageReceived(1)
@@ -74,7 +74,7 @@ class BehaviorStops {
 	fun `Stop on very busy connection`() {
 		server(channelActivityTimeout = 5, shutdownTimeout = 0) {
 			channel {
-				authorization()
+				authentication()
 				sendMessageSleep(1, 2500)
 				server.stop()
 				receiveMessageReceived(1)

@@ -5,7 +5,7 @@ import org.shypl.csi.core.ChannelHandler
 import org.shypl.csi.core.internal.DummyChannelHandler
 import org.shypl.csi.core.internal.ProtocolMarker
 import org.shypl.csi.core.server.ChannelAcceptor
-import org.shypl.csi.core.server.ConnectionAuthorizer
+import org.shypl.csi.core.server.ConnectionAuthenticator
 import org.shypl.tool.io.ByteBuffer
 import org.shypl.tool.io.putInt
 import org.shypl.tool.lang.waitWhileLater
@@ -27,8 +27,8 @@ internal class Channels<I : Any>(
 	private val activityTimeoutSeconds: Int,
 	private val shutdownTimeoutSeconds: Int,
 	private val stopTimeoutSeconds: Int,
-	authorizer: ConnectionAuthorizer<I>,
-	authorizationAcceptor: ConnectionAuthorizationAcceptor<I>,
+	authenticator: ConnectionAuthenticator<I>,
+	authenticationAcceptor: ConnectionAuthenticationAcceptor<I>,
 	recoveryAcceptor: ConnectionRecoveryAcceptor
 ) : ChannelAcceptor, ServerChannelReleaser {
 	
@@ -36,7 +36,7 @@ internal class Channels<I : Any>(
 	private val _size = AtomicInteger()
 	private val channels = ConcurrentHashMap.newKeySet<ServerChannel>()
 	private val receptionProcessor = ReceptionChannelProcessor(
-		VersionValidatorChannelProcessor(serverVersion, AuthorizationChannelProcessor(authorizer, authorizationAcceptor)),
+		VersionValidatorChannelProcessor(serverVersion, AuthenticationChannelProcessor(authenticator, authenticationAcceptor)),
 		RecoveryChannelProcessor(recoveryAcceptor)
 	)
 	

@@ -57,8 +57,8 @@ class CoverageConnections {
 			DummyConnectionRegistry()
 		)
 		
-		connections.acceptAuthorization(NothingInternalChannel, 1)
-		connections.acceptAuthorization(NothingInternalChannel, 1)
+		connections.acceptAuthentication(NothingInternalChannel, 1)
+		connections.acceptAuthentication(NothingInternalChannel, 1)
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ class CoverageConnections {
 			DummyConnectionRegistry()
 		)
 		
-		connections.acceptAuthorization(object : InternalChannel {
+		connections.acceptAuthentication(object : InternalChannel {
 			override val id: Any = 1
 			
 			override fun useProcessor(processor: InternalChannelProcessor) {}
@@ -109,7 +109,7 @@ class CoverageConnections {
 			DummyConnectionRegistry()
 		)
 		
-		connections.acceptAuthorization(object : InternalChannel {
+		connections.acceptAuthentication(object : InternalChannel {
 			override val id: Any = 1
 			
 			override fun useProcessor(processor: InternalChannelProcessor) {}
@@ -124,7 +124,7 @@ class CoverageConnections {
 			
 			override fun send(data: ByteArray) {
 				
-				connections.acceptAuthorization(object : InternalChannel {
+				connections.acceptAuthentication(object : InternalChannel {
 					override val id: Any = 1
 					
 					override fun useProcessor(processor: InternalChannelProcessor) {}
@@ -167,7 +167,7 @@ class CoverageConnections {
 			DummyConnectionRegistry()
 		)
 		
-		connections.acceptAuthorization(object : InternalChannel {
+		connections.acceptAuthentication(object : InternalChannel {
 			override val id: Any = 1
 			
 			override fun useProcessor(processor: InternalChannelProcessor) {}

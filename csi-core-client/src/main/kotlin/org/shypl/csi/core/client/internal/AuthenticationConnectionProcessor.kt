@@ -11,7 +11,7 @@ import org.shypl.tool.io.InputByteBuffer
 import org.shypl.tool.utils.assistant.TemporalAssistant
 import org.shypl.tool.utils.pool.ObjectPool
 
-internal class AuthorizationConnectionProcessor(
+internal class AuthenticationConnectionProcessor(
 	private val assistant: TemporalAssistant,
 	private val byteBuffers: ObjectPool<ByteBuffer>,
 	private val activityTimeoutSeconds: Int,
