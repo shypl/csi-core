@@ -3,4 +3,4 @@ shypl-tool-lang = "org.shypl.tool:tool-lang:1.0.0-SNAPSHOT"
 shypl-tool-logging = { module = "org.shypl.tool:tool-logging", version = "1.0.0-SNAPSHOT"}
 shypl-tool-utils = { module = "org.shypl.tool:tool-utils", version = "1.0.0-SNAPSHOT"}
 shypl-tool-io = { module = "org.shypl.tool:tool-io", version = "1.0.0-SNAPSHOT"}
-logback = { module = "ch.qos.logback:logback-classic", version = "1.5.6"}
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.16"}
