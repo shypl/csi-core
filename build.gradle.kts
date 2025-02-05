@@ -1,5 +1,6 @@
 plugins {
-	kotlin("jvm") version "2.1.0" apply false
+	kotlin("jvm") version "2.1.10" apply false
+	id("maven-publish")
 	id("nebula.release") version "19.0.10"
 }
 
@@ -11,7 +12,10 @@ subprojects {
 			
 			repositories {
 				mavenCentral()
-				mavenLocal()
+				maven("https://maven.pkg.github.com/shypl/packages").credentials {
+					username = ""
+					password = project.property("shypl.gpr.key") as String
+				}
 			}
 		}
 		
@@ -28,3 +32,13 @@ subprojects {
 	}
 }
 
+publishing {
+	repositories.maven("https://maven.pkg.github.com/shypl/packages").credentials {
+		username = project.property("shypl.gpr.user") as String
+		password = project.property("shypl.gpr.key") as String
+	}
+}
+
+tasks.release {
+	finalizedBy(tasks["publish"])
+}
