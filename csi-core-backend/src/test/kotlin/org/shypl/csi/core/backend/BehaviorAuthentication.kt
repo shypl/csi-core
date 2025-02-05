@@ -1,0 +1,136 @@
+package org.shypl.csi.core.backend
+
+import org.shypl.csi.core.backend._test.server
+import org.shypl.tool.lang.waitWhile
+import kotlin.test.Test
+
+class BehaviorAuthentication {
+	@Test
+	fun `Invalid version with split message`() {
+		server(version = 5) {
+			channel {
+				sendData {
+					writeByte(0x10)
+					writeByte(0x00)
+					writeByte(0x00)
+				}
+				sendData {
+					writeByte(0x00)
+					writeByte(0x02)
+					writeInt(0)
+				}
+				receiveData("50")
+				receiveClose()
+			}
+		}
+	}
+	
+	@Test
+	fun `Authentication rejected on bad auth key with split message`() {
+		server {
+			channel {
+				sendData {
+					writeByte(0x10)
+					writeInt(1)
+					writeInt(4)
+				}
+				sendData {
+					writeInt(0)
+				}
+				receiveData("51")
+				receiveClose()
+			}
+		}
+	}
+	
+	@Test
+	fun `Error on authentication`() {
+		server {
+			channel {
+				sendData {
+					writeByte(0x10)
+					writeInt(1)
+					writeInt(1)
+					writeByte(0x42)
+				}
+				receiveData("32")
+				receiveClose()
+			}
+		}
+	}
+	
+	@Test
+	fun `Concurrent connections`() {
+		server {
+			channel {
+				authentication(1)
+				receiveData("53")
+				receiveClose()
+			}
+			waitWhile(1000) { server.connections == 0 }
+			channel {
+				authentication(1)
+				sendClose()
+				receiveClose()
+			}
+		}
+	}
+	
+	
+	@Test
+	fun `Input data on acceptation`() {
+		var w = true
+		server {
+			channel {
+				authentication(1)
+				sendMessageSleep(1, 500)
+				w = false
+				receiveMessageReceived(1)
+				receiveData("53")
+				receiveClose()
+			}
+			
+			waitWhile(1000) { w }
+			
+			channel {
+				sendData {
+					writeByte(0x10)
+					writeInt(1)
+					writeInt(4)
+					writeInt(1)
+					writeByte(0x77)
+				}
+				receiveData("31")
+				receiveClose()
+			}
+		}
+	}
+	
+	@Test
+	fun `Channel closed on acceptation`() {
+		var w = true
+		server {
+			channel {
+				authentication(1)
+				sendMessageSleep(1, 500)
+				w = false
+				receiveMessageReceived(1)
+				receiveData("53")
+				receiveClose()
+			}
+			
+			waitWhile(1000) { w }
+			
+			channel {
+				sendData {
+					writeByte(0x10)
+					writeInt(1)
+					writeInt(4)
+					writeInt(1)
+				}
+				sendClose()
+				receiveClose()
+			}
+		}
+	}
+}

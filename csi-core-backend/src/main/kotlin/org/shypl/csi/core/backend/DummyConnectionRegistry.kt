@@ -1,0 +1,10 @@
+package org.shypl.csi.core.backend
+
+class DummyConnectionRegistry<I : Any> : ConnectionRegistry<I> {
+	override fun put(identity: I, handler: () -> Unit) {
+		handler()
+	}
+	
+	override fun remove(identity: I) {
+	}
+}
