@@ -5,6 +5,6 @@ rootProject.name = "csi-core"
 
 include(
 	"csi-core-common",
-	"csi-core-frontend",
-	"csi-core-backend"
+	"csi-core-client",
+	"csi-core-server"
 )
