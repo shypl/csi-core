@@ -22,23 +22,17 @@ subprojects {
 		extensions.findByType<PublishingExtension>()?.apply {
 			group = "org.shypl.csi"
 			
-			publications.create<MavenPublication>("Library") {
-				from(components["java"])
-			}
 			configure<JavaPluginExtension> {
 				withSourcesJar()
 			}
+			publications.create<MavenPublication>("Library") {
+				from(components["java"])
+			}
+			repositories.maven("https://maven.pkg.github.com/shypl/packages").credentials {
+				username = project.property("shypl.gpr.user") as String
+				password = project.property("shypl.gpr.key") as String
+			}
+			rootProject.tasks["release"].finalizedBy(tasks["publish"])
 		}
 	}
-}
-
-publishing {
-	repositories.maven("https://maven.pkg.github.com/shypl/packages").credentials {
-		username = project.property("shypl.gpr.user") as String
-		password = project.property("shypl.gpr.key") as String
-	}
-}
-
-tasks.release {
-	finalizedBy(tasks["publish"])
 }
