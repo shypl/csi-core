@@ -32,7 +32,10 @@ subprojects {
 				username = project.property("shypl.gpr.user") as String
 				password = project.property("shypl.gpr.key") as String
 			}
-			rootProject.tasks["release"].finalizedBy(tasks["publish"])
+			rootProject.tasks["release"].apply {
+				dependsOn(tasks["assemble"])
+				finalizedBy(tasks["publish"])
+			}
 		}
 	}
 }
